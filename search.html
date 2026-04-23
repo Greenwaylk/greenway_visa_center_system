@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GVC Student Search</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  padding:40px 20px;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(52,199,89,0.15), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,122,255,0.15), transparent 40%),
+    linear-gradient(135deg, #eef2f7, #dfe9f3);
+}
+
+/* Topbar */
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
+  display:flex;
+  align-items:center;
+  padding:0 30px;
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(20px);
+}
+
+.topbar img{
+  width:40px;
+  margin-right:10px;
+}
+
+.topbar h1{
+  color:#34c759;
+  font-size:18px;
+}
+
+/* Container */
+.container{
+  max-width:900px;
+  margin:100px auto;
+}
+
+/* Search box */
+.search-box{
+  background:rgba(255,255,255,0.7);
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:14px;
+  background:#f5f7fa;
+  font-size:14px;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #34c759;
+}
+
+/* Result card */
+.card{
+  background:rgba(255,255,255,0.7);
+  padding:20px;
+  border-radius:18px;
+  margin-bottom:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+}
+
+.title{
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+.small{
+  font-size:13px;
+  color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <img src="logo.png">
+  <h1>GVC Student Search</h1>
+</div>
+
+<div class="container">
+
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search by Name / NIC / Student ID..." oninput="searchStudent()">
+</div>
+
+<div id="results"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
+  authDomain: "gw-system-6e4cc.firebaseapp.com",
+  projectId: "gw-system-6e4cc",
+  storageBucket: "gw-system-6e4cc.appspot.com",
+  messagingSenderId: "591268620894",
+  appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let students = [];
+
+async function loadStudents(){
+  const snap = await getDocs(collection(db,"students"));
+  students = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+await loadStudents();
+
+/* 🔍 SEARCH */
+window.searchStudent = function(){
+
+  const value = document.getElementById("searchInput").value.toLowerCase();
+  const results = document.getElementById("results");
+
+  results.innerHTML = "";
+
+  if(!value) return;
+
+  const filtered = students.filter(s =>
+    (s.name && s.name.toLowerCase().includes(value)) ||
+    (s.nic && s.nic.toLowerCase().includes(value)) ||
+    (s.studentId && s.studentId.toLowerCase().includes(value))
+  );
+
+  if(filtered.length === 0){
+    results.innerHTML = "<p>No results found</p>";
+    return;
+  }
+
+  filtered.forEach(s => {
+    results.innerHTML += `
+      <div class="card" onclick="showDetails('${s.id}')">
+        <div class="title">${s.name} (${s.studentId})</div>
+        <div class="small">NIC: ${s.nic}</div>
+        <div class="small">Status: ${s.status}</div>
+      </div>
+    `;
+  });
+
+}
+
+/* 📄 SHOW FULL DETAILS */
+window.showDetails = function(id){
+
+  const s = students.find(st => st.id === id);
+  const results = document.getElementById("results");
+
+  results.innerHTML = `
+    <div class="card">
+
+      <div class="title">${s.name}</div>
+
+      <hr style="margin:10px 0; opacity:0.2;">
+
+      <p><strong>Student ID:</strong> ${s.studentId}</p>
+      <p><strong>NIC:</strong> ${s.nic}</p>
+      <p><strong>Phone:</strong> ${s.phone}</p>
+      <p><strong>WhatsApp:</strong> ${s.whatsapp}</p>
+      <p><strong>Address:</strong> ${s.address}</p>
+
+      <hr style="margin:10px 0; opacity:0.2;">
+
+      <p><strong>Passport:</strong> ${s.passport}</p>
+      <p><strong>Passport No:</strong> ${s.passportNo}</p>
+
+      <hr style="margin:10px 0; opacity:0.2;">
+
+      <p><strong>Country:</strong> ${s.country}</p>
+      <p><strong>Visa Type:</strong> ${s.visaType}</p>
+      <p><strong>Intake:</strong> ${s.intake}</p>
+      <p><strong>Status:</strong> ${s.status}</p>
+
+      <hr style="margin:10px 0; opacity:0.2;">
+
+      <p><strong>Remarks:</strong> ${s.remarks}</p>
+
+      <button onclick="searchStudent()" style="margin-top:15px;">⬅ Back</button>
+
+    </div>
+  `;
+}
+
+</script>
+
+</body>
+</html>

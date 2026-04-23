@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GVC Visa Center</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  padding:40px 20px;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(52,199,89,0.15), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,122,255,0.15), transparent 40%),
+    linear-gradient(135deg, #eef2f7, #dfe9f3);
+}
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
+  display:flex;
+  align-items:center;
+  padding:0 30px;
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(20px);
+}
+
+.topbar img{
+  width:40px;
+  margin-right:10px;
+}
+
+.topbar h1{
+  color:#34c759;
+  font-size:18px;
+}
+
+.container{
+  max-width:800px;
+  margin:100px auto;
+}
+
+.card{
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(25px);
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.1);
+}
+
+.id-box{
+  text-align:center;
+  font-size:18px;
+  font-weight:600;
+  color:#007aff;
+  margin-bottom:15px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border:none;
+  border-radius:14px;
+  background:#f5f7fa;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #34c759;
+  background:#fff;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row input, .row select{
+  flex:1;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:#34c759;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#28a745;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <img src="logo.png">
+  <h1>GVC Visa Center</h1>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<div class="id-box" id="studentId">Generating ID...</div>
+
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="nic" placeholder="NIC">
+
+<div class="row">
+  <input type="text" id="phone" placeholder="Phone">
+  <input type="text" id="whatsapp" placeholder="WhatsApp">
+</div>
+
+<textarea id="address" placeholder="Address"></textarea>
+
+<select id="passport">
+  <option value="no">No Passport</option>
+  <option value="yes">Have Passport</option>
+</select>
+
+<input type="text" id="passportNo" placeholder="Passport Number">
+
+<div class="row">
+  <select id="country">
+    <option>Country</option>
+    <option>Japan</option>
+    <option>Dubai</option>
+    <option>Romania</option>
+  </select>
+
+  <select id="visaType">
+    <option>Visa Type</option>
+    <option>Student</option>
+    <option>Work</option>
+    <option>Training</option>
+  </select>
+</div>
+
+<div class="row">
+  <input type="date" id="intake">
+  <select id="status">
+    <option>Pending</option>
+    <option>Processing</option>
+    <option>Approved</option>
+    <option>Rejected</option>
+  </select>
+</div>
+
+<textarea id="remarks" placeholder="Remarks"></textarea>
+
+<button onclick="saveStudent()">Register Student</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* 🔥 YOUR FIREBASE (FIXED) */
+const firebaseConfig = {
+  apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
+  authDomain: "gw-system-6e4cc.firebaseapp.com",
+  projectId: "gw-system-6e4cc",
+  storageBucket: "gw-system-6e4cc.appspot.com",
+  messagingSenderId: "591268620894",
+  appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* AUTO ID GENERATOR */
+async function generateId(){
+  const snap = await getDocs(collection(db,"students"));
+  const count = snap.size + 1;
+
+  const year = new Date().getFullYear();
+  const id = `GVC-${year}-${String(count).padStart(4,'0')}`;
+
+  document.getElementById("studentId").innerText = id;
+  return id;
+}
+
+let currentId = "";
+generateId().then(id => currentId = id);
+
+/* SAVE STUDENT */
+window.saveStudent = async function(){
+
+  await addDoc(collection(db,"students"),{
+
+    studentId: currentId,
+    name: document.getElementById("name").value,
+    nic: document.getElementById("nic").value,
+    phone: document.getElementById("phone").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    address: document.getElementById("address").value,
+    passport: document.getElementById("passport").value,
+    passportNo: document.getElementById("passportNo").value,
+    country: document.getElementById("country").value,
+    visaType: document.getElementById("visaType").value,
+    intake: document.getElementById("intake").value,
+    status: document.getElementById("status").value,
+    remarks: document.getElementById("remarks").value,
+    createdAt: new Date()
+
+  });
+
+  alert("Student Registered Successfully (GVC) ✅");
+  location.reload();
+}
+
+</script>
+
+</body>
+</html>

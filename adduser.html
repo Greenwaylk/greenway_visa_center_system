@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenway Add User</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+/* 🌈 Animated Background */
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(52,199,89,0.2), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,122,255,0.2), transparent 40%),
+    linear-gradient(135deg, #eef2f7, #dfe9f3);
+}
+
+.card{
+  width:100%;
+  max-width:450px;
+  padding:35px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(25px);
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+  color:#34c759;
+  font-size:20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border:none;
+  border-radius:12px;
+  background:#f5f7fa;
+  font-size:14px;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #34c759;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:#34c759;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#28a745;
+}
+
+.msg{
+  text-align:center;
+  margin-top:10px;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Add User</h1>
+
+  <input id="name" placeholder="Name">
+  <input id="section" placeholder="Section">
+  <input id="designation" placeholder="Designation">
+  <input id="phone" placeholder="Phone Number">
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+
+  <button id="saveBtn">Save User</button>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* ✅ NEW FIREBASE (gw-system-6e4cc) */
+const firebaseConfig = {
+  apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
+  authDomain: "gw-system-6e4cc.firebaseapp.com",
+  projectId: "gw-system-6e4cc",
+  storageBucket: "gw-system-6e4cc.appspot.com",
+  messagingSenderId: "591268620894",
+  appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ✅ SAVE USER */
+document.getElementById("saveBtn").addEventListener("click", async () => {
+
+  const name = document.getElementById("name").value;
+  const section = document.getElementById("section").value;
+  const designation = document.getElementById("designation").value;
+  const phone = document.getElementById("phone").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
+
+  if(!name || !section || !designation || !phone || !username || !password){
+    msg.style.color = "red";
+    msg.innerText = "Please fill all fields";
+    return;
+  }
+
+  try{
+    await addDoc(collection(db, "users"), {
+      name,
+      section,
+      designation,
+      phone,
+      username,
+      password,
+      createdAt: new Date()
+    });
+
+    msg.style.color = "green";
+    msg.innerText = "User Added Successfully ✅";
+
+    document.querySelectorAll("input").forEach(i => i.value = "");
+
+  }catch(err){
+    console.log(err);
+    msg.style.color = "red";
+    msg.innerText = "Firebase Error ❌";
+  }
+});
+</script>
+
+</body>
+</html>

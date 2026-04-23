@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenway Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(52,199,89,0.2), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,122,255,0.2), transparent 40%),
+    linear-gradient(135deg, #eef2f7, #dfe9f3);
+}
+
+.card{
+  width:100%;
+  max-width:380px;
+  padding:35px;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(25px);
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  color:#34c759;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:14px;
+  background:#f5f7fa;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #34c759;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:14px;
+  background:#34c759;
+  color:white;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.msg{
+  text-align:center;
+  margin-top:10px;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Greenway Login</h1>
+
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+
+  <button id="loginBtn">Login</button>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* Firebase (NEW SYSTEM) */
+const firebaseConfig = {
+  apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
+  authDomain: "gw-system-6e4cc.firebaseapp.com",
+  projectId: "gw-system-6e4cc",
+  storageBucket: "gw-system-6e4cc.appspot.com",
+  messagingSenderId: "591268620894",
+  appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* LOGIN */
+document.getElementById("loginBtn").addEventListener("click", async () => {
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
+
+  if(!username || !password){
+    msg.style.color = "red";
+    msg.innerText = "Enter username & password";
+    return;
+  }
+
+  try{
+
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const snap = await getDocs(q);
+
+    if(snap.empty){
+      msg.style.color = "red";
+      msg.innerText = "User not found";
+      return;
+    }
+
+    const user = snap.docs[0].data();
+
+    if(user.password === password){
+
+      msg.style.color = "green";
+      msg.innerText = "Login Successful ✅";
+
+      setTimeout(()=>{
+        window.location.href = "home.html";
+      },1000);
+
+    }else{
+      msg.style.color = "red";
+      msg.innerText = "Wrong password ❌";
+    }
+
+  }catch(err){
+    console.log(err);
+    msg.style.color = "red";
+    msg.innerText = "Firebase Error";
+  }
+
+});
+</script>
+
+</body>
+</html>
