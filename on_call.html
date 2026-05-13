@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GVC On-Call Registration</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  padding:40px 20px;
+
+  background:
+    radial-gradient(circle at top left, rgba(52,199,89,0.15), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,122,255,0.12), transparent 35%),
+    linear-gradient(135deg,#eef3f8,#dfe9f3);
+}
+
+/* TOPBAR */
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
+  padding:0 30px;
+  display:flex;
+  align-items:center;
+  z-index:999;
+
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.4);
+}
+
+.topbar img{
+  width:42px;
+  margin-right:12px;
+}
+
+.topbar h1{
+  font-size:18px;
+  color:#34c759;
+  font-weight:700;
+}
+
+/* CONTAINER */
+
+.container{
+  max-width:900px;
+  margin:100px auto;
+}
+
+.card{
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(25px);
+  border-radius:28px;
+  padding:30px;
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.page-title{
+  font-size:28px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.page-sub{
+  color:#666;
+  margin-bottom:25px;
+}
+
+/* ID BOX */
+
+.id-box{
+  background:linear-gradient(135deg,#007aff,#34c759);
+  color:white;
+  padding:18px;
+  border-radius:18px;
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.id-box span{
+  display:block;
+  font-size:13px;
+  opacity:0.9;
+  margin-bottom:5px;
+}
+
+.id-box h2{
+  font-size:22px;
+  letter-spacing:1px;
+}
+
+/* FORM */
+
+.section-title{
+  margin:20px 0 14px;
+  color:#007aff;
+  font-size:15px;
+  font-weight:600;
+}
+
+.row{
+  display:flex;
+  gap:14px;
+}
+
+.row .field{
+  flex:1;
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+  font-weight:500;
+  color:#333;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:16px;
+  background:#f4f7fb;
+  transition:0.25s;
+  font-size:14px;
+}
+
+textarea{
+  resize:none;
+  min-height:100px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  background:#fff;
+  box-shadow:0 0 0 2px #34c759;
+}
+
+/* STATUS BADGE */
+
+.status-box{
+  background:#ecfff2;
+  color:#1f8f46;
+  padding:14px;
+  border-radius:16px;
+  margin-bottom:18px;
+  font-size:14px;
+}
+
+/* BUTTON */
+
+button{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,#34c759,#28a745);
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(52,199,89,0.25);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .row{
+    flex-direction:column;
+    gap:0;
+  }
+
+  .card{
+    padding:22px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+  <img src="logo.png">
+  <h1>Greenway Visa Center</h1>
+</div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="page-title">On-Call Registration</div>
+    <div class="page-sub">
+      Register client inquiries received through phone calls.
+    </div>
+
+    <!-- REGISTRATION NUMBER -->
+
+    <div class="id-box">
+      <span>Registration Number</span>
+      <h2 id="registrationNo">Generating...</h2>
+    </div>
+
+    <div class="status-box">
+      📞 Registration Mode : On-Call Inquiry
+    </div>
+
+    <!-- BASIC DETAILS -->
+
+    <div class="section-title">Basic Information</div>
+
+    <div class="row">
+
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter full name">
+      </div>
+
+      <div class="field">
+        <label>NIC Number</label>
+        <input type="text" id="nic" placeholder="Enter NIC">
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="text" id="phone" placeholder="077XXXXXXX">
+      </div>
+
+      <div class="field">
+        <label>WhatsApp Number</label>
+        <input type="text" id="whatsapp" placeholder="WhatsApp number">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Address</label>
+      <textarea id="address" placeholder="Enter address"></textarea>
+    </div>
+
+    <!-- VISA DETAILS -->
+
+    <div class="section-title">Visa Information</div>
+
+    <div class="row">
+
+      <div class="field">
+        <label>Country</label>
+        <select id="country">
+          <option value="">Select Country</option>
+          <option>Japan</option>
+          <option>Dubai</option>
+          <option>Romania</option>
+          <option>Israel</option>
+          <option>Kuwait</option>
+          <option>Cyprus</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Visa Type</label>
+        <select id="visaType">
+          <option value="">Select Visa Type</option>
+          <option>Student Visa</option>
+          <option>Work Visa</option>
+          <option>Caregiver Visa</option>
+          <option>Training Visa</option>
+          <option>Dependent Visa</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="field">
+        <label>Passport Status</label>
+        <select id="passport">
+          <option>No Passport</option>
+          <option>Have Passport</option>
+          <option>Expired Passport</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Inquiry Source</label>
+        <select id="source">
+          <option>Facebook</option>
+          <option>TikTok</option>
+          <option>WhatsApp</option>
+          <option>Hotline</option>
+          <option>Walk-In</option>
+          <option>Referral</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- DATE -->
+
+    <div class="section-title">Registration Details</div>
+
+    <div class="row">
+
+      <div class="field">
+        <label>Date</label>
+        <input type="text" id="date" readonly>
+      </div>
+
+      <div class="field">
+        <label>Time</label>
+        <input type="text" id="time" readonly>
+      </div>
+
+    </div>
+
+    <!-- REMARKS -->
+
+    <div class="field">
+      <label>Remarks</label>
+      <textarea id="remarks" placeholder="Additional notes..."></textarea>
+    </div>
+
+    <!-- BUTTON -->
+
+    <button onclick="saveRegistration()">
+      Save On-Call Registration
+    </button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
+  authDomain: "gw-system-6e4cc.firebaseapp.com",
+  projectId: "gw-system-6e4cc",
+  storageBucket: "gw-system-6e4cc.appspot.com",
+  messagingSenderId: "591268620894",
+  appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* DATE + TIME */
+
+function loadDateTime(){
+
+  const now = new Date();
+
+  const date =
+    now.getFullYear() + "-" +
+    String(now.getMonth()+1).padStart(2,'0') + "-" +
+    String(now.getDate()).padStart(2,'0');
+
+  const time =
+    now.toLocaleTimeString();
+
+  document.getElementById("date").value = date;
+  document.getElementById("time").value = time;
+
+}
+
+loadDateTime();
+
+/* GENERATE REGISTRATION NUMBER */
+
+async function generateRegistrationNo(){
+
+  const snap = await getDocs(collection(db,"oncall_registrations"));
+
+  const count = snap.size + 1;
+
+  const year = new Date().getFullYear();
+
+  const regNo =
+    `ONCALL-${year}-${String(count).padStart(4,'0')}`;
+
+  document.getElementById("registrationNo").innerText = regNo;
+
+  return regNo;
+
+}
+
+let currentRegNo = "";
+
+generateRegistrationNo().then(id => currentRegNo = id);
+
+/* SAVE DATA */
+
+window.saveRegistration = async function(){
+
+  const data = {
+
+    registrationNo: currentRegNo,
+
+    name: document.getElementById("name").value,
+    nic: document.getElementById("nic").value,
+
+    phone: document.getElementById("phone").value,
+    whatsapp: document.getElementById("whatsapp").value,
+
+    address: document.getElementById("address").value,
+
+    country: document.getElementById("country").value,
+    visaType: document.getElementById("visaType").value,
+
+    passportStatus: document.getElementById("passport").value,
+    inquirySource: document.getElementById("source").value,
+
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+
+    remarks: document.getElementById("remarks").value,
+
+    createdAt: new Date()
+
+  };
+
+  await addDoc(
+    collection(db,"oncall_registrations"),
+    data
+  );
+
+  alert("On-Call Registration Saved ✅");
+
+  location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
