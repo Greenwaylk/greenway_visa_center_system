@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -19,14 +18,11 @@
 body{
   min-height:100vh;
   padding:40px 20px;
-
   background:
     radial-gradient(circle at top left, rgba(52,199,89,0.15), transparent 30%),
     radial-gradient(circle at bottom right, rgba(0,122,255,0.12), transparent 35%),
     linear-gradient(135deg,#eef3f8,#dfe9f3);
 }
-
-/* TOPBAR */
 
 .topbar{
   position:fixed;
@@ -38,54 +34,26 @@ body{
   display:flex;
   align-items:center;
   z-index:999;
-
   background:rgba(255,255,255,0.6);
   backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,0.4);
 }
 
-.topbar img{
-  width:42px;
-  margin-right:12px;
-}
+.topbar img{ width:42px; margin-right:12px; }
+.topbar h1{ font-size:18px; color:#34c759; font-weight:700; }
 
-.topbar h1{
-  font-size:18px;
-  color:#34c759;
-  font-weight:700;
-}
-
-/* CONTAINER */
-
-.container{
-  max-width:900px;
-  margin:100px auto;
-}
+.container{ max-width:900px; margin:100px auto; }
 
 .card{
   background:rgba(255,255,255,0.72);
   backdrop-filter:blur(25px);
   border-radius:28px;
   padding:30px;
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+  box-shadow:0 15px 40px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-.page-title{
-  font-size:28px;
-  font-weight:700;
-  color:#111;
-  margin-bottom:8px;
-}
-
-.page-sub{
-  color:#666;
-  margin-bottom:25px;
-}
-
-/* ID BOX */
+.page-title{ font-size:28px; font-weight:700; color:#111; margin-bottom:8px; }
+.page-sub{ color:#666; margin-bottom:25px; }
 
 .id-box{
   background:linear-gradient(135deg,#007aff,#34c759);
@@ -96,19 +64,8 @@ body{
   margin-bottom:25px;
 }
 
-.id-box span{
-  display:block;
-  font-size:13px;
-  opacity:0.9;
-  margin-bottom:5px;
-}
-
-.id-box h2{
-  font-size:22px;
-  letter-spacing:1px;
-}
-
-/* FORM */
+.id-box span{ display:block; font-size:13px; opacity:0.9; margin-bottom:5px; }
+.id-box h2{ font-size:22px; letter-spacing:1px; }
 
 .section-title{
   margin:20px 0 14px;
@@ -117,18 +74,10 @@ body{
   font-weight:600;
 }
 
-.row{
-  display:flex;
-  gap:14px;
-}
+.row{ display:flex; gap:14px; }
+.row .field{ flex:1; }
 
-.row .field{
-  flex:1;
-}
-
-.field{
-  margin-bottom:16px;
-}
+.field{ margin-bottom:16px; }
 
 label{
   display:block;
@@ -138,9 +87,7 @@ label{
   color:#333;
 }
 
-input,
-select,
-textarea{
+input, select, textarea{
   width:100%;
   padding:15px;
   border:none;
@@ -155,15 +102,11 @@ textarea{
   min-height:100px;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+input:focus, select:focus, textarea:focus{
   outline:none;
   background:#fff;
   box-shadow:0 0 0 2px #34c759;
 }
-
-/* STATUS BADGE */
 
 .status-box{
   background:#ecfff2;
@@ -173,8 +116,6 @@ textarea:focus{
   margin-bottom:18px;
   font-size:14px;
 }
-
-/* BUTTON */
 
 button{
   width:100%;
@@ -187,6 +128,7 @@ button{
   font-weight:600;
   cursor:pointer;
   transition:0.3s;
+  margin-top:10px;
 }
 
 button:hover{
@@ -194,85 +136,91 @@ button:hover{
   box-shadow:0 10px 25px rgba(52,199,89,0.25);
 }
 
-/* MOBILE */
-
-@media(max-width:768px){
-
-  .row{
-    flex-direction:column;
-    gap:0;
-  }
-
-  .card{
-    padding:22px;
-  }
-
+.secondary-btn{
+  background:linear-gradient(135deg,#007aff,#0056d6);
 }
 
+.assessment-form{
+  display:none;
+  margin-top:25px;
+  padding:20px;
+  border-radius:20px;
+  background:#f8fff9;
+  border:2px solid #d9f1df;
+}
+
+.assessment-grid{
+  display:grid;
+  grid-template-columns:2fr repeat(4,1fr);
+  gap:8px;
+  margin-bottom:15px;
+  align-items:center;
+}
+
+.assessment-grid div{
+  padding:10px;
+  background:white;
+  border-radius:10px;
+  text-align:center;
+  font-size:13px;
+}
+
+.assessment-grid .head{
+  background:#34c759;
+  color:white;
+  font-weight:600;
+}
+
+@media(max-width:768px){
+  .row{ flex-direction:column; gap:0; }
+  .card{ padding:22px; }
+  .assessment-grid{ grid-template-columns:1fr; }
+}
 </style>
 </head>
 
 <body>
-
-<!-- TOPBAR -->
 
 <div class="topbar">
   <img src="logo.png">
   <h1>Greenway Visa Center</h1>
 </div>
 
-<!-- MAIN -->
-
 <div class="container">
-
   <div class="card">
 
     <div class="page-title">On-Call Registration</div>
-    <div class="page-sub">
-      Register client inquiries received through phone calls.
-    </div>
-
-    <!-- REGISTRATION NUMBER -->
+    <div class="page-sub">Register client inquiries received through phone calls.</div>
 
     <div class="id-box">
       <span>Registration Number</span>
       <h2 id="registrationNo">Generating...</h2>
     </div>
 
-    <div class="status-box">
-      📞 Registration Mode : On-Call Inquiry
-    </div>
-
-    <!-- BASIC DETAILS -->
+    <div class="status-box">📞 Registration Mode : On-Call Inquiry</div>
 
     <div class="section-title">Basic Information</div>
 
     <div class="row">
-
       <div class="field">
         <label>Full Name</label>
         <input type="text" id="name" placeholder="Enter full name">
       </div>
-
       <div class="field">
         <label>NIC Number</label>
         <input type="text" id="nic" placeholder="Enter NIC">
       </div>
-
     </div>
 
     <div class="row">
-
       <div class="field">
         <label>Phone Number</label>
         <input type="text" id="phone" placeholder="077XXXXXXX">
       </div>
-
       <div class="field">
         <label>WhatsApp Number</label>
         <input type="text" id="whatsapp" placeholder="WhatsApp number">
       </div>
-
     </div>
 
     <div class="field">
@@ -280,12 +228,9 @@ button:hover{
       <textarea id="address" placeholder="Enter address"></textarea>
     </div>
 
-    <!-- VISA DETAILS -->
-
     <div class="section-title">Visa Information</div>
 
     <div class="row">
-
       <div class="field">
         <label>Country</label>
         <select id="country">
@@ -310,11 +255,9 @@ button:hover{
           <option>Dependent Visa</option>
         </select>
       </div>
-
     </div>
 
     <div class="row">
-
       <div class="field">
         <label>Passport Status</label>
         <select id="passport">
@@ -335,157 +278,174 @@ button:hover{
           <option>Referral</option>
         </select>
       </div>
-
     </div>
-
-    <!-- DATE -->
 
     <div class="section-title">Registration Details</div>
 
     <div class="row">
-
       <div class="field">
         <label>Date</label>
         <input type="text" id="date" readonly>
       </div>
-
       <div class="field">
         <label>Time</label>
         <input type="text" id="time" readonly>
       </div>
-
     </div>
-
-    <!-- REMARKS -->
 
     <div class="field">
       <label>Remarks</label>
       <textarea id="remarks" placeholder="Additional notes..."></textarea>
     </div>
 
-    <!-- BUTTON -->
+    <button type="button" onclick="toggleAssessment()" class="secondary-btn">
+      Assessment Criteria
+    </button>
+
+    <div class="assessment-form" id="assessmentForm">
+      <div class="section-title">Assessment Criteria & Rating</div>
+
+      <div class="assessment-grid">
+        <div class="head">Criteria</div>
+        <div class="head">Below</div>
+        <div class="head">Meets</div>
+        <div class="head">Exceeds</div>
+        <div class="head">N/A</div>
+
+        <div>Education</div>
+        <div><input type="radio" name="education" value="Below"></div>
+        <div><input type="radio" name="education" value="Meets"></div>
+        <div><input type="radio" name="education" value="Exceeds"></div>
+        <div><input type="radio" name="education" value="NA"></div>
+
+        <div>Work Experience</div>
+        <div><input type="radio" name="work" value="Below"></div>
+        <div><input type="radio" name="work" value="Meets"></div>
+        <div><input type="radio" name="work" value="Exceeds"></div>
+        <div><input type="radio" name="work" value="NA"></div>
+
+        <div>English Fluency</div>
+        <div><input type="radio" name="english" value="Below"></div>
+        <div><input type="radio" name="english" value="Meets"></div>
+        <div><input type="radio" name="english" value="Exceeds"></div>
+        <div><input type="radio" name="english" value="NA"></div>
+
+        <div>Financial Capacity</div>
+        <div><input type="radio" name="financial" value="Below"></div>
+        <div><input type="radio" name="financial" value="Meets"></div>
+        <div><input type="radio" name="financial" value="Exceeds"></div>
+        <div><input type="radio" name="financial" value="NA"></div>
+      </div>
+
+      <div class="field">
+        <label>Assessor's overall comment</label>
+        <textarea id="overallComment"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Special Remarks</label>
+        <textarea id="specialRemarks"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Assessor Name</label>
+          <input type="text" id="assessorName">
+        </div>
+        <div class="field">
+          <label>Position</label>
+          <input type="text" id="assessorPosition">
+        </div>
+      </div>
+    </div>
 
     <button onclick="saveRegistration()">
       Save On-Call Registration
     </button>
 
   </div>
-
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
-/* FIREBASE CONFIG */
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
   authDomain: "gw-system-6e4cc.firebaseapp.com",
   projectId: "gw-system-6e4cc",
   storageBucket: "gw-system-6e4cc.appspot.com",
   messagingSenderId: "591268620894",
   appId: "1:591268620894:web:3d3e9a06c3fb632cac22cf"
-
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* DATE + TIME */
+window.toggleAssessment = function(){
+  const form = document.getElementById("assessmentForm");
+  form.style.display = form.style.display === "block" ? "none" : "block";
+};
 
 function loadDateTime(){
-
   const now = new Date();
-
-  const date =
-    now.getFullYear() + "-" +
-    String(now.getMonth()+1).padStart(2,'0') + "-" +
-    String(now.getDate()).padStart(2,'0');
-
-  const time =
-    now.toLocaleTimeString();
-
-  document.getElementById("date").value = date;
-  document.getElementById("time").value = time;
-
+  document.getElementById("date").value = now.toISOString().split('T')[0];
+  document.getElementById("time").value = now.toLocaleTimeString();
 }
-
 loadDateTime();
 
-/* GENERATE REGISTRATION NUMBER */
-
 async function generateRegistrationNo(){
-
   const snap = await getDocs(collection(db,"oncall_registrations"));
-
   const count = snap.size + 1;
-
   const year = new Date().getFullYear();
-
-  const regNo =
-    `ONCALL-${year}-${String(count).padStart(4,'0')}`;
-
+  const regNo = `ONCALL-${year}-${String(count).padStart(4,'0')}`;
   document.getElementById("registrationNo").innerText = regNo;
-
   return regNo;
-
 }
 
 let currentRegNo = "";
-
 generateRegistrationNo().then(id => currentRegNo = id);
 
-/* SAVE DATA */
-
-window.saveRegistration = async function(){
-
-  const data = {
-
-    registrationNo: currentRegNo,
-
-    name: document.getElementById("name").value,
-    nic: document.getElementById("nic").value,
-
-    phone: document.getElementById("phone").value,
-    whatsapp: document.getElementById("whatsapp").value,
-
-    address: document.getElementById("address").value,
-
-    country: document.getElementById("country").value,
-    visaType: document.getElementById("visaType").value,
-
-    passportStatus: document.getElementById("passport").value,
-    inquirySource: document.getElementById("source").value,
-
-    date: document.getElementById("date").value,
-    time: document.getElementById("time").value,
-
-    remarks: document.getElementById("remarks").value,
-
-    createdAt: new Date()
-
-  };
-
-  await addDoc(
-    collection(db,"oncall_registrations"),
-    data
-  );
-
-  alert("On-Call Registration Saved ✅");
-
-  location.reload();
-
+function getRadioValue(name){
+  const selected = document.querySelector(`input[name="${name}"]:checked`);
+  return selected ? selected.value : "";
 }
 
+window.saveRegistration = async function(){
+  const data = {
+    registrationNo: currentRegNo,
+    name: document.getElementById("name").value,
+    nic: document.getElementById("nic").value,
+    phone: document.getElementById("phone").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    address: document.getElementById("address").value,
+    country: document.getElementById("country").value,
+    visaType: document.getElementById("visaType").value,
+    passportStatus: document.getElementById("passport").value,
+    inquirySource: document.getElementById("source").value,
+    date: document.getElementById("date").value,
+    time: document.getElementById("time").value,
+    remarks: document.getElementById("remarks").value,
+
+    assessment: {
+      education: getRadioValue("education"),
+      work: getRadioValue("work"),
+      english: getRadioValue("english"),
+      financial: getRadioValue("financial"),
+      overallComment: document.getElementById("overallComment").value,
+      specialRemarks: document.getElementById("specialRemarks").value,
+      assessorName: document.getElementById("assessorName").value,
+      assessorPosition: document.getElementById("assessorPosition").value
+    },
+
+    createdAt: new Date()
+  };
+
+  await addDoc(collection(db,"oncall_registrations"), data);
+
+  alert("On-Call Registration Saved ✅");
+  location.reload();
+}
 </script>
 
 </body>
