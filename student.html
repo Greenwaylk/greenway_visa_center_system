@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GVC Visa Center</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{
   margin:0;
@@ -14,17 +12,14 @@
   box-sizing:border-box;
   font-family:'Inter',sans-serif;
 }
-
 body{
   min-height:100vh;
   padding:40px 20px;
-
   background:
     radial-gradient(circle at 20% 20%, rgba(52,199,89,0.15), transparent 40%),
     radial-gradient(circle at 80% 30%, rgba(0,122,255,0.15), transparent 40%),
     linear-gradient(135deg, #eef2f7, #dfe9f3);
 }
-
 .topbar{
   position:fixed;
   top:0;
@@ -34,152 +29,302 @@ body{
   display:flex;
   align-items:center;
   padding:0 30px;
-  background:rgba(255,255,255,0.6);
+  background:rgba(255,255,255,0.75);
   backdrop-filter:blur(20px);
+  z-index:1000;
 }
-
 .topbar img{
-  width:40px;
-  margin-right:10px;
+  width:45px;
+  margin-right:12px;
 }
-
 .topbar h1{
   color:#34c759;
-  font-size:18px;
+  font-size:20px;
+  font-weight:700;
 }
-
 .container{
-  max-width:800px;
+  max-width:1100px;
   margin:100px auto;
 }
-
 .card{
-  background:rgba(255,255,255,0.7);
+  background:rgba(255,255,255,0.75);
   backdrop-filter:blur(25px);
-  padding:25px;
-  border-radius:20px;
+  padding:30px;
+  border-radius:24px;
   box-shadow:0 15px 40px rgba(0,0,0,0.1);
 }
-
 .id-box{
   text-align:center;
+  font-size:20px;
+  font-weight:700;
+  color:#007aff;
+  margin-bottom:25px;
+}
+.section-title{
+  margin:25px 0 15px;
+  padding:12px 18px;
+  background:#34c759;
+  color:white;
+  border-radius:14px;
   font-size:18px;
   font-weight:600;
-  color:#007aff;
-  margin-bottom:15px;
 }
-
 input, select, textarea{
   width:100%;
   padding:14px;
-  margin-bottom:12px;
+  margin-bottom:14px;
   border:none;
   border-radius:14px;
   background:#f5f7fa;
+  font-size:14px;
 }
-
 input:focus, select:focus, textarea:focus{
   outline:none;
   box-shadow:0 0 0 2px #34c759;
   background:#fff;
 }
-
 .row{
   display:flex;
-  gap:10px;
+  gap:12px;
+  flex-wrap:wrap;
 }
-
-.row input, .row select{
+.row > *{
   flex:1;
+  min-width:220px;
 }
-
+.checkbox-group, .radio-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-bottom:15px;
+  padding:12px;
+  background:#f5f7fa;
+  border-radius:14px;
+}
+.checkbox-group label, .radio-group label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:14px;
+}
+.checkbox-group input, .radio-group input{
+  width:auto;
+  margin:0;
+}
 button{
   width:100%;
-  padding:16px;
+  padding:18px;
   border:none;
   border-radius:16px;
   background:#34c759;
   color:white;
-  font-size:16px;
+  font-size:18px;
+  font-weight:600;
   cursor:pointer;
+  margin-top:20px;
 }
-
 button:hover{
   background:#28a745;
 }
+@media(max-width:768px){
+  .card{padding:20px;}
+}
 </style>
 </head>
-
 <body>
-
 <div class="topbar">
-  <img src="logo.png">
+  <img src="logo.png" alt="GVC Logo">
   <h1>GVC Visa Center</h1>
 </div>
-
 <div class="container">
-
 <div class="card">
-
 <div class="id-box" id="studentId">Generating ID...</div>
 
-<input type="text" id="name" placeholder="Full Name">
-<input type="text" id="nic" placeholder="NIC">
-
+<div class="section-title">1. Personal Information</div>
+<input type="text" id="fullName" placeholder="Full Name">
 <div class="row">
-  <input type="text" id="phone" placeholder="Phone">
-  <input type="text" id="whatsapp" placeholder="WhatsApp">
+  <input type="date" id="dob">
+  <input type="text" id="nic" placeholder="NIC">
+</div>
+<div class="row">
+  <input type="text" id="residenceCountry" placeholder="Country of Residence">
+  <input type="text" id="nationality" placeholder="Nationality">
+</div>
+<select id="maritalStatus">
+  <option value="">Marital Status</option>
+  <option>Single</option>
+  <option>Married</option>
+  <option>Divorced</option>
+</select>
+<div class="row">
+  <select id="hasChildren">
+    <option value="">Do you have children?</option>
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+  <input type="number" id="childrenCount" placeholder="Number of Children">
 </div>
 
-<textarea id="address" placeholder="Address"></textarea>
-
-<select id="passport">
-  <option value="no">No Passport</option>
-  <option value="yes">Have Passport</option>
+<div class="section-title">2. Contact Information</div>
+<div class="row">
+  <input type="text" id="phone" placeholder="Mobile Number">
+  <input type="text" id="whatsapp" placeholder="WhatsApp Number">
+</div>
+<textarea id="address" placeholder="Home Address"></textarea>
+<input type="email" id="email" placeholder="Email Address">
+<select id="preferredContact">
+  <option value="">Preferred Contact Method</option>
+  <option>WhatsApp</option>
+  <option>Email</option>
+  <option>Phone Call</option>
 </select>
 
-<input type="text" id="passportNo" placeholder="Passport Number">
+<div class="section-title">3. Preferred Destination</div>
+<select id="preferredCountry">
+  <option value="">Select Preferred Country</option>
+  <option>Australia</option>
+  <option>Canada</option>
+  <option>New Zealand</option>
+  <option>UK</option>
+  <option>Ireland</option>
+  <option>Sweden</option>
+  <option>France</option>
+  <option>Germany</option>
+  <option>Japan</option>
+  <option>Other</option>
+</select>
+<select id="openOtherCountries">
+  <option value="">Open to other countries if eligible?</option>
+  <option>Yes</option>
+  <option>No</option>
+</select>
 
+<div class="section-title">4. Purpose</div>
+<select id="mainGoal">
+  <option value="">Main Goal</option>
+  <option>Study Abroad</option>
+  <option>Work Abroad</option>
+  <option>Permanent Migration</option>
+</select>
+
+<div class="section-title">5. Education</div>
+<select id="qualification">
+  <option value="">Highest Qualification</option>
+  <option>High School Certification</option>
+  <option>Diploma</option>
+  <option>Associate's Degree</option>
+  <option>Bachelor's Degree</option>
+  <option>Master's Degree</option>
+  <option>Doctorate (PhD)</option>
+</select>
 <div class="row">
-  <select id="country">
-    <option>Country</option>
-    <option>Japan</option>
-    <option>Dubai</option>
-    <option>Romania</option>
-  </select>
-
-  <select id="visaType">
-    <option>Visa Type</option>
-    <option>Student</option>
-    <option>Work</option>
-    <option>Training</option>
-  </select>
+  <input type="text" id="fieldStudy" placeholder="Field of Study">
+  <input type="text" id="completionYear" placeholder="Year of Completion">
 </div>
+<input type="text" id="institution" placeholder="Institution / University">
 
+<div class="section-title">6. Work Experience</div>
+<select id="workExperience">
+  <option value="">Total Years of Work Experience</option>
+  <option>0-1 year</option>
+  <option>2-3 years</option>
+  <option>4-5 years</option>
+  <option>6+ years</option>
+</select>
+<input type="text" id="currentOccupation" placeholder="Current Occupation">
+<input type="text" id="currentEmployer" placeholder="Current Employer">
+
+<div class="section-title">7. Language Skills</div>
+<select id="englishLevel">
+  <option value="">English Level</option>
+  <option>Beginner</option>
+  <option>Intermediate</option>
+  <option>Advanced</option>
+</select>
 <div class="row">
-  <input type="date" id="intake">
-  <select id="status">
-    <option>Pending</option>
-    <option>Processing</option>
-    <option>Approved</option>
-    <option>Rejected</option>
+  <select id="englishTest">
+    <option value="">English Test</option>
+    <option>IELTS</option>
+    <option>PTE</option>
+    <option>TOEFL</option>
+    <option>No Test Yet</option>
+  </select>
+  <input type="text" id="englishScore" placeholder="Test Score">
+</div>
+<input type="text" id="otherLanguages" placeholder="Other Languages (German/French/Spanish/Other)">
+
+<div class="section-title">8. Financial Capacity</div>
+<select id="savings">
+  <option value="">Approximate Savings</option>
+  <option>Under Rs.500,000</option>
+  <option>Rs.500,000-1M</option>
+  <option>Rs.1M-5M</option>
+  <option>Above 5M</option>
+</select>
+<select id="income">
+  <option value="">Current Income</option>
+  <option>Under Rs.500,000</option>
+  <option>Rs.500,000-1M</option>
+  <option>Rs.1M-5M</option>
+  <option>Above 5M</option>
+</select>
+<select id="financialSponsor">
+  <option value="">Do you have a financial sponsor?</option>
+  <option>Yes</option>
+  <option>No</option>
+</select>
+
+<div class="section-title">9. Family Immigration</div>
+<div class="row">
+  <select id="spouseTravel">
+    <option value="">Will spouse travel with you?</option>
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+  <select id="childrenTravel">
+    <option value="">Will children travel with you?</option>
+    <option>Yes</option>
+    <option>No</option>
   </select>
 </div>
 
-<textarea id="remarks" placeholder="Remarks"></textarea>
-
-<button onclick="saveStudent()">Register Student</button>
-
+<div class="section-title">10. Immigration History</div>
+<select id="previousVisa">
+  <option value="">Previously applied for visa?</option>
+  <option>Yes</option>
+  <option>No</option>
+</select>
+<div class="row">
+  <input type="text" id="visaCountry" placeholder="Country">
+  <input type="text" id="visaType" placeholder="Visa Type">
+</div>
+<div class="row">
+  <select id="visaApproved">
+    <option value="">Was it approved?</option>
+    <option>Yes</option>
+    <option>No</option>
+  </select>
+  <input type="text" id="refusalReason" placeholder="If refused, reason">
 </div>
 
+<div class="section-title">11. Additional Information</div>
+<div class="checkbox-group">
+  <label><input type="checkbox" id="admissionLetter"> University Admission Letter</label>
+  <label><input type="checkbox" id="jobOffer"> Job Offer from Overseas</label>
+  <label><input type="checkbox" id="remoteContract"> Remote Work Contract</label>
+</div>
+
+<div class="section-title">12. Special Notes</div>
+<textarea id="specialNotes" placeholder="Special Notes"></textarea>
+
+<button onclick="saveStudent()">Register Client</button>
+</div>
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-/* 🔥 YOUR FIREBASE (FIXED) */
 const firebaseConfig = {
   apiKey: "AIzaSyCzf-_CUf9g9CN9J7_e5GuAAROpbi6Zw3w",
   authDomain: "gw-system-6e4cc.firebaseapp.com",
@@ -192,14 +337,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* AUTO ID GENERATOR */
 async function generateId(){
   const snap = await getDocs(collection(db,"students"));
   const count = snap.size + 1;
-
   const year = new Date().getFullYear();
   const id = `GVC-${year}-${String(count).padStart(4,'0')}`;
-
   document.getElementById("studentId").innerText = id;
   return id;
 }
@@ -207,33 +349,56 @@ async function generateId(){
 let currentId = "";
 generateId().then(id => currentId = id);
 
-/* SAVE STUDENT */
 window.saveStudent = async function(){
-
-  await addDoc(collection(db,"students"),{
-
+  await addDoc(collection(db,"students"), {
     studentId: currentId,
-    name: document.getElementById("name").value,
+    fullName: document.getElementById("fullName").value,
+    dob: document.getElementById("dob").value,
     nic: document.getElementById("nic").value,
+    residenceCountry: document.getElementById("residenceCountry").value,
+    nationality: document.getElementById("nationality").value,
+    maritalStatus: document.getElementById("maritalStatus").value,
+    hasChildren: document.getElementById("hasChildren").value,
+    childrenCount: document.getElementById("childrenCount").value,
     phone: document.getElementById("phone").value,
     whatsapp: document.getElementById("whatsapp").value,
     address: document.getElementById("address").value,
-    passport: document.getElementById("passport").value,
-    passportNo: document.getElementById("passportNo").value,
-    country: document.getElementById("country").value,
+    email: document.getElementById("email").value,
+    preferredContact: document.getElementById("preferredContact").value,
+    preferredCountry: document.getElementById("preferredCountry").value,
+    openOtherCountries: document.getElementById("openOtherCountries").value,
+    mainGoal: document.getElementById("mainGoal").value,
+    qualification: document.getElementById("qualification").value,
+    fieldStudy: document.getElementById("fieldStudy").value,
+    completionYear: document.getElementById("completionYear").value,
+    institution: document.getElementById("institution").value,
+    workExperience: document.getElementById("workExperience").value,
+    currentOccupation: document.getElementById("currentOccupation").value,
+    currentEmployer: document.getElementById("currentEmployer").value,
+    englishLevel: document.getElementById("englishLevel").value,
+    englishTest: document.getElementById("englishTest").value,
+    englishScore: document.getElementById("englishScore").value,
+    otherLanguages: document.getElementById("otherLanguages").value,
+    savings: document.getElementById("savings").value,
+    income: document.getElementById("income").value,
+    financialSponsor: document.getElementById("financialSponsor").value,
+    spouseTravel: document.getElementById("spouseTravel").value,
+    childrenTravel: document.getElementById("childrenTravel").value,
+    previousVisa: document.getElementById("previousVisa").value,
+    visaCountry: document.getElementById("visaCountry").value,
     visaType: document.getElementById("visaType").value,
-    intake: document.getElementById("intake").value,
-    status: document.getElementById("status").value,
-    remarks: document.getElementById("remarks").value,
+    visaApproved: document.getElementById("visaApproved").value,
+    refusalReason: document.getElementById("refusalReason").value,
+    admissionLetter: document.getElementById("admissionLetter").checked,
+    jobOffer: document.getElementById("jobOffer").checked,
+    remoteContract: document.getElementById("remoteContract").checked,
+    specialNotes: document.getElementById("specialNotes").value,
     createdAt: new Date()
-
   });
 
-  alert("Student Registered Successfully (GVC) ✅");
+  alert("Client Registered Successfully ✅");
   location.reload();
 }
-
 </script>
-
 </body>
 </html>
